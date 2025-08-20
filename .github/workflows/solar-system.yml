@@ -100,3 +100,8 @@
             kubectl -n default get pod
             sleep 10
 
+    integration-test:
+        need: dev-deploy
+        uses: ./.github/workflow/reusable-workflow.yml
+        with:
+          ingress-url: ${{ needs.dev-deploy.outputs.APP_INGRESS_URL }}
