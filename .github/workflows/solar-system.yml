@@ -80,8 +80,9 @@
         needs: 
           - docker
         runs-on: ubuntu-latest
-        environment: development
-
+        environment: 
+          - name: development
+            
         steps:
         - name: Install Ubernetes Cluster
           uses: helm/kind-action@v1
