@@ -81,7 +81,7 @@
           - docker
         runs-on: ubuntu-latest
         environment: 
-          - name: development
+          name: development
             
         steps:
         - name: Install Ubernetes Cluster
