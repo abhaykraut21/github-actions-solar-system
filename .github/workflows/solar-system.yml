@@ -76,8 +76,9 @@
          tags: ghcr.io/${{ steps.lower.outputs.repo }}/solar-system:${{ github.sha }}
 
     dev-deploy:
-      - name: dev-deploy
-        needs: docker
+        name: dev-deploy
+        needs: 
+          - docker
         runs-on: ubuntu-latest
         environment: development
 
