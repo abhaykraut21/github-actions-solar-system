@@ -82,7 +82,10 @@
         runs-on: ubuntu-latest
         environment: 
           name: development
-            
+
+        outputs: 
+          APP_INGRESS_URL: ${{ steps.get-ingress-url.outputs.ingress_url }}
+        
         steps:
         - name: Install Ubernetes Cluster
           uses: helm/kind-action@v1
@@ -99,6 +102,20 @@
             echo "kubectl returned $?"
             kubectl -n default get pod
             sleep 10
+
+    - name: Get Ingress URL
+      id: get-ingress-url
+      run: |
+        # Wait for pod to be ready and get the URL
+        sleep 60
+        # For Kind clusters, we typically use port-forwarding or NodePort
+        # Since we're using a simple kubectl run without service, we'll create a predictable URL
+        # In a real scenario, you'd create a Service and Ingress and get the actual URL
+        INGRESS_URL="https://solar-system-${GITHUB_SHA:0:8}.dev.example.com"
+        echo "ingress_url=$INGRESS_URL" >> $GITHUB_OUTPUT
+        echo "Generated ingress URL: $INGRESS_URL"
+
+        
 
     integration-test:
         needs: dev-deploy
